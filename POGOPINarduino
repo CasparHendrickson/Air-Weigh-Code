@@ -1,0 +1,80 @@
+
+
+// include the library code:
+#include <LiquidCrystal.h>
+
+// initialize the library with the numbers of the interface pins
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+int LED = 8;
+int button = 6;
+int reset = 9;
+bool waspressed= false;
+bool hasrun = false;
+
+
+void setup() {
+  // set up the LCD's number of columns and rows:
+  lcd.begin(16, 2);
+  Serial.begin(9600);
+  pinMode(LED, OUTPUT);
+  pinMode(button,INPUT);
+  pinMode(reset, INPUT);
+  // Print a message to the LCD.
+
+}
+
+void loop() {
+  // set the cursor to column 0, line 1
+  // (note: line 1 is the second row, since counting begins with 0):
+  lcd.setCursor(0, 0);
+  int state=digitalRead(button);
+  int resetval = digitalRead(reset);
+  if (resetval ==1){
+   waspressed=1;
+  }
+  Serial.print("resetval  ");
+  Serial.println(resetval);
+  Serial.print("state    ");
+  Serial.println(state);
+  Serial.print("hasrun      ");
+  Serial.println(hasrun);
+
+
+  if (state ==1 && hasrun==0) {
+    lcd.clear();
+    functionthing();
+  }
+  if (resetval == 1 && hasrun==1){
+
+    waspressed=1;
+    hasrun=0;
+    lcd.print("Place a new Board");
+    lcd.clear();
+
+
+
+  }
+  Serial.print("Waspressed     ");
+  Serial.println(waspressed);
+
+}
+
+void functionthing(){
+  lcd.clear();
+  for (int i = 0; i < 100 && digitalRead(button) == HIGH; i++){
+    if (i >55){
+      lcd.print("Done");
+      delay(1000);
+      lcd.clear();
+      lcd.print("Please Remove");
+      delay(1000);
+      lcd.clear();
+      hasrun = 1;
+      return;
+    }
+    lcd.print(i);
+  	lcd.setCursor(0, 0);
+    delay(10);
+
+  }
+}
