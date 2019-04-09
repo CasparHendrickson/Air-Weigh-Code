@@ -41,10 +41,10 @@ void setup() {
 void loop() {
   	change_button_val=digitalRead(change_button);
   if (change_button_val == 1){
-    lcd.setCursor(2, 1);//Make the display in different places
+    lcd.setCursor(0, 1);//Make the display in different places
     pot_val = analogRead(pot);
-    testing_length = map(pot_val,0, 1023, 1, 15);//Map to differnet values, may change based on Roman's test
-    lcd.print("Test Length");
+    testing_length = map(pot_val,0, 1023, 1, 120);//Map to differnet values, may change based on Roman's test
+    lcd.print(F("Test Length"));
     lcd.print(":");
     lcd.print(testing_length);//Specified length, again, might be based of of Roman's test at some point.
   	lcd.print(" ");
@@ -102,7 +102,7 @@ void timingfunc(){
     lcd.print(i);
     digitalWrite(LED_R_RUNNING, HIGH);
     digitalWrite(LED_W_REPLACE,LOW);
-    lcd.setCursor(2,1);
+    lcd.setCursor(0,1);
   	lcd.print("Test Length");
     lcd.print(":");
     lcd.print(testing_length);//Specified length, again, might be based of of Roman's test at some point.
